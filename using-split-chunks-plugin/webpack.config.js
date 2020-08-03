@@ -1,0 +1,35 @@
+const path=require('path');
+
+module.exports={
+  mode:'production',
+  entry:{
+    app:'./src/js/app.js',
+    app2:'./src/js/app2.js',
+    app3:'./src/js/app3.js'
+  },
+  output:{
+    filename:'[name].bundle.js',
+    path:path.resolve(__dirname,'public/js')
+  },
+  optimization:{
+    splitChunks:{
+      cacheGroups:{
+        vendor:{
+          //node_modules配下のモジュールをバンドル対象とする
+          test:/node_modules/,
+          //今回は'vendor'で、output.filenameが'[name].bundle.js'のため
+          //vendor.bundle.jsが出力される
+          //vendor.bundle.jsが出力される
+          name:'vendor',
+          //共通モジュールとしてバンドルする対象の設定
+          chunks:'initial',
+          //webpackはデフォルトでいくつかのsplitChunksの設定が有効になる
+          //これをtrueにすると、それらの設定の
+          //splitChunks.minSize,splitChunks.minChunks,splitChunks.maxAsyncRequests,
+          //plitChunks.maxInitialRequestsを無効にできる
+          enforce:true
+        }
+      }
+    }
+  }
+};
